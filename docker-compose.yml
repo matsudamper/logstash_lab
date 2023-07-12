@@ -1,0 +1,16 @@
+version: '2'
+services:
+  logstash:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - DB_USER=
+      - DB_PASSWORD=
+      - JDBC_CONNECTION_STRING=jdbc:mysql://host.docker.internal:3306/schema?useUnicode=true&characterEncoding=utf8&connectionTimezone=SERVER&useCursorFetch=true
+      - JDBC_DRIVER_CLASS=com.mysql.cj.jdbc.Driver
+      - XPACK_MONITORING_ENABLED=false
+    volumes:
+      - ./pipeline/:/usr/share/logstash/pipeline/
+    extra_hosts:
+      - host.docker.internal:host-gateway
